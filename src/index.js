@@ -4,5 +4,5 @@ import Board from './Board';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Board count={50} />, document.getElementById('react-container'));
 registerServiceWorker();
