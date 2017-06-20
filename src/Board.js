@@ -1,5 +1,6 @@
 import React from 'react'
 import './App.css'
+import Note from "./Note"
 
 var Board = React.createClass({
   propTypes: {
