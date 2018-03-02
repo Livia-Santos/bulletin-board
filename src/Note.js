@@ -1,17 +1,23 @@
 import React from 'react'
-import './App.css'
+import './index.css'
 import Draggable from 'react-draggable'
 
 var Note = React.createClass ({
   getInitialState(){
-    return {editing: false}
+    return {
+      editing: false,
+      noteColor: "#FFFF00",
+      positionalAttributes: {}
+    }
   },
 
   componentWillMount(){
-    this.style = {
-      right: this.randomBetween(0, window.innerWidth - 150, "px"),
-      top: this.randomBetween(0, window.innerHeight - 150, "px")
-    }
+    this.setState({
+      positionalAttributes: {
+        right: this.randomBetween(0, window.innerWidth - 150, "px"),
+        top: this.randomBetween(0, window.innerHeight - 150, "px")
+      }
+    })
   },
 
   componentDidUpdate() {
@@ -29,9 +35,24 @@ var Note = React.createClass ({
     return this.props.children !== nextProps.children || this.state !== nextState
   },
 
-  edit() {
+  changeNoteColor(e) {
+    this.setState({
+      noteColor: e.target.value
+    })
+  },
+
+  noteStyle () {
+    var styles = {
+      backgroundColor: this.state.noteColor,
+      ...this.state.positionalAttributes
+    }
+    return styles;
+  },
+
+  edit(){
     this.setState({editing: true})
   },
+
   save(){
     this.props.onChange(this.refs.newText.value, this.props.id)
     this.setState({editing: false})
@@ -55,9 +76,10 @@ var Note = React.createClass ({
   renderDisplay(){
     return (
       <div className ="note"
-            style={this.style}>
+            style={this.noteStyle()}>
         <p>{this.props.children}</p>
         <span>
+          <input type="color" value={this.state.noteColor} onChange={this.changeNoteColor}/>
           <button onClick={this.edit}>EDIT</button>
           <button onClick={this.remove}>X</button>
         </span>

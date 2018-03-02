@@ -1,5 +1,5 @@
 import React from 'react'
-import './App.css'
+import './index.css'
 import Note from "./Note"
 
 var Board = React.createClass({
@@ -29,7 +29,8 @@ var Board = React.createClass({
         .then(array => array[0])
         .then(text => text.split('. '))
         .then(array => array.forEach(
-            sentence => this.add(sentence)))
+            sentence => this.add(sentence)
+        ))
         .catch(function(err) {
           console.log("Didn't connect to the API", err)
         })
