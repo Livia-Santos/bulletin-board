@@ -1,65 +1,67 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './index.css'
 import Draggable from 'react-draggable'
 
-var Note = React.createClass ({
-  getInitialState(){
-    return {
+class Note extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
       editing: false,
       noteColor: "#FFFF00",
       positionalAttributes: {}
     }
-  },
+  }
 
-  componentWillMount(){
+  componentWillMount = () => {
     this.setState({
       positionalAttributes: {
         right: this.randomBetween(0, window.innerWidth - 150, "px"),
         top: this.randomBetween(0, window.innerHeight - 150, "px")
       }
     })
-  },
+  }
 
   componentDidUpdate() {
     if (this.state.editing) {
       this.refs.newText.focus()
       this.refs.newText.select()
     }
-  },
+  }
 
   randomBetween(x,y,s){
     return (x + Math.ceil(Math.random() * (y-x))) + s
-  },
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.children !== nextProps.children || this.state !== nextState
-  },
+  }
 
-  changeNoteColor(e) {
+  changeNoteColor = (e) => {
     this.setState({
       noteColor: e.target.value
     })
-  },
+  }
 
-  noteStyle () {
+  noteStyle() {
     var styles = {
       backgroundColor: this.state.noteColor,
       ...this.state.positionalAttributes
     }
     return styles;
-  },
+  }
 
-  edit(){
+  edit = () => {
     this.setState({editing: true})
-  },
+  }
 
-  save(){
+  save = () => {
     this.props.onChange(this.refs.newText.value, this.props.id)
     this.setState({editing: false})
-  },
-  remove(){
+  }
+
+  remove() {
     this.props.onRemove(this.props.id)
-  },
+  }
 
   renderForm(){
     return (
@@ -71,7 +73,7 @@ var Note = React.createClass ({
       </div>
     )
 
-  },
+  }
 
   renderDisplay(){
     return (
@@ -85,8 +87,7 @@ var Note = React.createClass ({
         </span>
       </div>
     )
-  },
-
+  }
 
   render() {
     return ( <Draggable>
@@ -95,6 +96,6 @@ var Note = React.createClass ({
       </Draggable>
     )
   }
-})
+}
 
 export default Note
