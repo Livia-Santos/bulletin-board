@@ -66,7 +66,7 @@ class Note extends Component {
   renderForm(){
     return (
       <div className="note"
-            style={this.style}>
+            style={this.noteStyle()}>
         <textarea ref="newText"
                   defaultValue={this.props.children}></textarea>
         <button onClick = {this.save}>Save</button>
