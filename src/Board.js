@@ -6,11 +6,13 @@ class Board extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        notes: []
+      notes: []
     }
   }
+
   componentWillMount() {
     var self = this
+
     if(this.props.count) {
       fetch(`https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`)
         .then(response => response.json())
@@ -19,22 +21,6 @@ class Board extends Component {
                           .forEach(sentence => self.add(sentence.substring(0, 24))))
     }
   }
-
-  // componentWillMount = () => {
-  //   if (this.props.count) {
-  //     var url = `https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`
-  //     fetch(url)
-  //       .then(results => results.json())
-  //       .then(array => array[0])
-  //       .then(text => text.split('. '))
-  //       .then(array => array.forEach(
-  //           sentence => this.add(sentence)
-  //       ))
-  //       .catch(function(err) {
-  //         console.log("Didn't connect to the API", err)
-  //       })
-  //   }
-  // }
 
   nextId = () => {
     this.uniqueId = this.uniqueId || 0
@@ -46,21 +32,9 @@ class Board extends Component {
       ...this.state.notes,
       {
         id: this.nextId(),
-        note: text
+        initalText: text
       }
     ]
-    this.setState({notes})
-  }
-
-  update = (newText, id) => {
-    var notes = this.state.notes.map(
-      note => (note.id !== id) ?
-        note :
-        {
-          ...note,
-          note: newText
-        }
-      )
     this.setState({notes})
   }
 
@@ -69,18 +43,16 @@ class Board extends Component {
     this.setState({notes})
   }
 
-  eachNote = (note) => {
+  renderNote = (note) => {
     return(<Note key={note.id}
-                  id={note.id}
-                  onChange={this.update}
-                  onRemove={this.remove}>
-            {note.note}
-          </Note>)
+                 id={note.id}
+                 initialText={note.initalText}
+                 onRemove={this.remove} />);
   }
 
   render() {
     return(<div className='board'>
-            {this.state.notes.map(this.eachNote)}
+            {this.state.notes.map(this.renderNote)}
             <button onClick={()=> this.add("New Note")}>+</button>
           </div>)
   }

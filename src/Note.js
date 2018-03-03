@@ -8,7 +8,8 @@ class Note extends Component {
     this.state = {
       editing: false,
       noteColor: "#FFFF00",
-      positionalAttributes: {}
+      positionalAttributes: {},
+      text: props.initialText,
     }
   }
 
@@ -33,7 +34,7 @@ class Note extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.children !== nextProps.children || this.state !== nextState
+    return this.props.textValue !== nextProps.textValue || this.state !== nextState
   }
 
   changeNoteColor = (e) => {
@@ -55,20 +56,22 @@ class Note extends Component {
   }
 
   save = () => {
-    this.props.onChange(this.refs.newText.value, this.props.id)
-    this.setState({editing: false})
+    this.setState({
+      editing: false,
+      text: this.refs.newText.value
+    })
   }
 
-  remove() {
+  remove = () => {
     this.props.onRemove(this.props.id)
   }
 
   renderForm(){
     return (
       <div className="note"
-            style={this.noteStyle()}>
+           style={this.noteStyle()}>
         <textarea ref="newText"
-                  defaultValue={this.props.children}></textarea>
+                  defaultValue={this.state.text}></textarea>
         <button onClick = {this.save}>Save</button>
       </div>
     )
@@ -79,7 +82,7 @@ class Note extends Component {
     return (
       <div className ="note"
             style={this.noteStyle()}>
-        <p>{this.props.children}</p>
+        <p>{this.state.text}</p>
         <span>
           <input type="color" value={this.state.noteColor} onChange={this.changeNoteColor}/>
           <button onClick={this.edit}>EDIT</button>
