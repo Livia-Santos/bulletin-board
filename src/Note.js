@@ -20,6 +20,11 @@ class Note extends Component {
         top: this.randomBetween(0, window.innerHeight - 150, "px")
       }
     })
+    var NoteStyle = localStorage.getItem('styles');
+      if (NoteStyle) {
+        this.setState(JSON.parse(NoteStyle));
+      }
+    
   }
 
   componentDidUpdate() {
@@ -28,6 +33,11 @@ class Note extends Component {
       this.refs.newText.select()
     }
   }
+    
+  componentDidUpdate() {
+    localStorage.setItem(`${this.state.id}`, JSON.stringify(this.state));
+  }
+  
 
   randomBetween(x,y,s){
     return (x + Math.ceil(Math.random() * (y-x))) + s

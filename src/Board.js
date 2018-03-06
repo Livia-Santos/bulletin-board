@@ -11,15 +11,15 @@ class Board extends Component {
   }
 
   componentWillMount() {
-    var self = this
+    var storedState = localStorage.getItem('notes');
+      if (storedState) {
+        this.setState(JSON.parse(storedState));
+      }
+  }
 
-    if(this.props.count) {
-      fetch(`https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`)
-        .then(response => response.json())
-        .then(json => json[0]
-                          .split(". ")
-                          .forEach(sentence => self.add(sentence.substring(0, 24))))
-    }
+  
+  componentDidUpdate() {
+    localStorage.setItem("note", JSON.stringify(this.state));
   }
 
   nextId = () => {
