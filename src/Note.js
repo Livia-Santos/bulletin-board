@@ -14,30 +14,28 @@ class Note extends Component {
   }
 
   componentWillMount = () => {
-    this.setState({
-      positionalAttributes: {
-        right: this.randomBetween(0, window.innerWidth - 150, "px"),
-        top: this.randomBetween(0, window.innerHeight - 150, "px")
+    var storedNote = localStorage.getItem(this.props.id);
+      if (storedNote) {
+        this.setState(JSON.parse(storedNote));
+      } else  {
+        this.setState({
+          positionalAttributes: {
+            right: this.randomBetween(0, window.innerWidth - 150, "px"),
+            top: this.randomBetween(0, window.innerHeight - 150, "px")
+          }
+        })
       }
-    })
-    var NoteStyle = localStorage.getItem('styles');
-      if (NoteStyle) {
-        this.setState(JSON.parse(NoteStyle));
-      }
-    
   }
 
   componentDidUpdate() {
     if (this.state.editing) {
       this.refs.newText.focus()
       this.refs.newText.select()
+    } else {
+      localStorage.setItem(`${this.porps.id}`, JSON.stringify(this.state));
     }
   }
-    
-  componentDidUpdate() {
-    localStorage.setItem(`${this.state.id}`, JSON.stringify(this.state));
-  }
-  
+
 
   randomBetween(x,y,s){
     return (x + Math.ceil(Math.random() * (y-x))) + s

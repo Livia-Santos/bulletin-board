@@ -17,9 +17,9 @@ class Board extends Component {
       }
   }
 
-  
+
   componentDidUpdate() {
-    localStorage.setItem("note", JSON.stringify(this.state));
+    localStorage.setItem("notes", JSON.stringify(this.state));
   }
 
   nextId = () => {
