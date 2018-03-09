@@ -32,7 +32,7 @@ class Note extends Component {
       this.refs.newText.focus()
       this.refs.newText.select()
     } else {
-      localStorage.setItem(`${this.porps.id}`, JSON.stringify(this.state));
+      localStorage.setItem(this.props.id, JSON.stringify(this.state));
     }
   }
 

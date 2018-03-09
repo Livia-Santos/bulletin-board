@@ -11,10 +11,10 @@ class Board extends Component {
   }
 
   componentWillMount() {
-    var storedState = localStorage.getItem('notes');
-      if (storedState) {
-        this.setState(JSON.parse(storedState));
-      }
+    var storedState = localStorage.getItem("notes");
+    if (storedState) {
+      this.setState(JSON.parse(storedState));
+    }
   }
 
 
