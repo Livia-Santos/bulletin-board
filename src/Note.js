@@ -83,7 +83,6 @@ class Note extends Component {
         <button onClick = {this.save}>Save</button>
       </div>
     )
-
   }
 
   renderDisplay(){

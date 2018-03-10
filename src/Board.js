@@ -23,8 +23,7 @@ class Board extends Component {
   }
 
   nextId = () => {
-    this.uniqueId = this.uniqueId || 0
-    return this.uniqueId++
+    return this.state.notes.length + 1  
   }
 
   add = (text) => {
